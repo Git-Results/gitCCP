@@ -1,0 +1,2 @@
+# gitCCP
+Static Website
