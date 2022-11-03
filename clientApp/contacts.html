@@ -9,6 +9,38 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&amp;display=swap">
     <link rel="stylesheet" href="assets/css/Footer-Basic-icons.css">
     <link rel="stylesheet" href="assets/css/untitled.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+
+            $("#submit").click(function(e) {
+                e.preventDefault();
+                console.log("starting function");
+                var name = $("#name").val(),
+                    email = $("#email").val(),
+                    message = $("#message").val();
+                
+                $.ajax({
+                    type: "POST",
+                    url: 'https://jl4iyngtf1.execute-api.us-east-1.amazonaws.com/dev',
+                    contentType: 'application/json',
+                    data: JSON.stringify({
+                        'name': name,
+                        'email': email,
+                        'message': message
+                    }),
+                    success: function(res){
+                        $('#form-response').text('Email was sent.');
+                    },
+                    error: function(){
+                        $('#form-response').text('Error.');
+                    }
+                });
+
+            })
+
+        });
+    </script>
 </head>
 
 <body style="/*background: url(&quot;design.jpg&quot;);*/background-position: 0 -60px;">
@@ -45,6 +77,7 @@
                             <div><button class="btn btn-primary shadow d-block w-100" type="submit">Send </button></div>
                         </form>
                     </div>
+                    <div id="form-response"></div>
                 </div>
                 <div class="col-md-4 col-xl-4 d-flex justify-content-center justify-content-xl-start">
                     <div class="d-flex flex-wrap flex-md-column justify-content-md-start align-items-md-start h-100">
