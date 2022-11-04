@@ -16,18 +16,18 @@
             $("#submit").click(function(e) {
                 e.preventDefault();
                 console.log("starting function");
-                var name = $("#name").val(),
-                    email = $("#email").val(),
-                    message = $("#message").val();
+                // var name = $("#name").val(),
+                //     email = $("#email").val(),
+                //     message = $("#message").val();
                 
                 $.ajax({
                     type: "POST",
                     url: 'https://jl4iyngtf1.execute-api.us-east-1.amazonaws.com/dev',
                     contentType: 'application/json',
                     data: JSON.stringify({
-                        'name': name,
-                        'email': email,
-                        'message': message
+                        'name': 'Alishia',
+                        'email': 'ampatricio0@gmail.com',
+                        'message': 'message'
                     }),
                     success: function(res){
                         $('#form-response').text('Email was sent.');
