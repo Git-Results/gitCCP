@@ -9,6 +9,89 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&amp;display=swap">
     <link rel="stylesheet" href="assets/css/Footer-Basic-icons.css">
     <link rel="stylesheet" href="assets/css/untitled.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+
+            $.ajax({
+                    type: "GET",
+                    url: 'https://jl4iyngtf1.execute-api.us-east-1.amazonaws.com/dev/getquiz',
+                    contentType: 'application/json',
+                    
+                    success: function(res){
+                        console.log(res)
+                        var dataArray = res
+
+                        var i = 1
+
+                        dataArray.forEach(dataSet => {
+                            //create variables for data
+                            var questionNum = ("#question_id_" + dataSet.question_id);
+                            var answerA = ("#question-" + dataSet.question_id +"-a")
+                            var answerB = ("#question-" + dataSet.question_id +"-b")
+                            var answerC = ("#question-" + dataSet.question_id +"-c")
+                            var answerD = ("#question-" + dataSet.question_id +"-d")
+                            $(questionNum).text(dataSet.question);
+                            $(answerA).text(dataSet.answer_a);
+                            $(answerB).text(dataSet.answer_b);
+                            $(answerC).text(dataSet.answer_c);
+                            $(answerD).text(dataSet.answer_d);
+                            i = i + 1
+                        })
+
+                        console.log(i);
+                    },
+                    error: function(){
+                        $('#form-response').text('Error.');
+                    }
+                });
+
+            $("#submit").click(function(e) {
+                e.preventDefault();
+                console.log("starting function");
+                var question1Answer = $("input[name=question1]:checked").val();
+                var question2Answer = $("input[name=question2]:checked").val();
+                var question3Answer = $("input[name=question3]:checked").val();
+                var question4Answer = $("input[name=question4]:checked").val();
+                var question5Answer = $("input[name=question5]:checked").val();
+                var question6Answer = $("input[name=question6]:checked").val();
+                var question7Answer = $("input[name=question7]:checked").val();
+                var question8Answer = $("input[name=question8]:checked").val();
+                var question9Answer = $("input[name=question9]:checked").val();
+                var question10Answer = $("input[name=question10]:checked").val();
+                console.log(question1Answer)
+                $.ajax({
+                    type: "POST",
+                    url: 'https://jl4iyngtf1.execute-api.us-east-1.amazonaws.com/dev/getquiz',
+                    contentType: 'application/json',
+                    data: JSON.stringify({
+                        'question1Answer': question1Answer,
+                        'question2Answer': question2Answer,
+                        'question3Answer': question3Answer,
+                        'question4Answer': question4Answer,
+                        'question5Answer': question5Answer,
+                        'question6Answer': question6Answer,
+                        'question7Answer': question7Answer,
+                        'question8Answer': question8Answer,
+                        'question9Answer': question9Answer,
+                        'question10Answer': question10Answer,
+                    }),
+                    success: function(res){
+                        console.log(res)
+                        var dataArray2 = res
+                        $('#form-response').text('You Scored ' + dataArray2.score + '%');
+                        $('#form-response2').text('You Scored ' + dataArray2.score + '%');
+                        $('#api2-response').text('Response from API 2');
+                    },
+                    error: function(){
+                        $('#api2-response').text('Error.');
+                    }
+                });
+
+            })
+
+        });
+    </script>
 </head>
 
 <body>
@@ -27,10 +110,11 @@
             </div>
         </div>
     </nav>
+    <h1 id="api2-response"></h1>
     <div class="container py-4 py-xl-5">
         <div class="col-md-8 col-xl-6 text-center text-md-start mx-auto">
             <div class="text-center">
-                <p class="fw-bold text-success mb-2" style="color: #114255;">Score</p>
+                <p class="fw-bold text-success mb-2" id="form-response" style="color: #114255;"></p>
                 <h1 class="fw-bold" style="color: #114255;">Test your knowledge</h1>
             </div>
         </div>
@@ -51,11 +135,11 @@
                                 <path fill-rule="evenodd" d="M4.475 5.458c-.284 0-.514-.237-.47-.517C4.28 3.24 5.576 2 7.825 2c2.25 0 3.767 1.36 3.767 3.215 0 1.344-.665 2.288-1.79 2.973-1.1.659-1.414 1.118-1.414 2.01v.03a.5.5 0 0 1-.5.5h-.77a.5.5 0 0 1-.5-.495l-.003-.2c-.043-1.221.477-2.001 1.645-2.712 1.03-.632 1.397-1.135 1.397-2.028 0-.979-.758-1.698-1.926-1.698-1.009 0-1.71.529-1.938 1.402-.066.254-.278.461-.54.461h-.777ZM7.496 14c.622 0 1.095-.474 1.095-1.09 0-.618-.473-1.092-1.095-1.092-.606 0-1.087.474-1.087 1.091S6.89 14 7.496 14Z"></path>
                             </svg></div>
                         <div>
-                            <h4>1. Question?</h4>
-                            <div class="form-check"><input class="form-check-input" type="radio" id="formCheck-1"><label class="form-check-label" for="formCheck-1">Label</label></div>
-                            <div class="form-check"><input class="form-check-input" type="radio" id="formCheck-2"><label class="form-check-label" for="formCheck-2">Label</label></div>
-                            <div class="form-check"><input class="form-check-input" type="radio" id="formCheck-3"><label class="form-check-label" for="formCheck-3">Label</label></div>
-                            <div class="form-check"><input class="form-check-input" type="radio" id="formCheck-4"><label class="form-check-label" for="formCheck-4">Label</label></div>
+                            <h4 id="question_id_1"></h4>
+                            <div class="form-check"><input class="form-check-input" type="radio" id="formCheck-1" name="question1" value="answer_a"><label class="form-check-label" id="question-1-a" for="formCheck-1"></label></div>
+                            <div class="form-check"><input class="form-check-input" type="radio" id="formCheck-2" name="question1" value="answer_b"><label class="form-check-label" id="question-1-b" for="formCheck-2"></label></div>
+                            <div class="form-check"><input class="form-check-input" type="radio" id="formCheck-3" name="question1" value="answer_c"><label class="form-check-label" id="question-1-c" for="formCheck-3"></label></div>
+                            <div class="form-check"><input class="form-check-input" type="radio" id="formCheck-4" name="question1" value="answer_d"><label class="form-check-label" id="question-1-d" for="formCheck-4"></label></div>
                         </div>
                     </div>
                     <hr class="my-5">
@@ -64,11 +148,11 @@
                                 <path fill-rule="evenodd" d="M4.475 5.458c-.284 0-.514-.237-.47-.517C4.28 3.24 5.576 2 7.825 2c2.25 0 3.767 1.36 3.767 3.215 0 1.344-.665 2.288-1.79 2.973-1.1.659-1.414 1.118-1.414 2.01v.03a.5.5 0 0 1-.5.5h-.77a.5.5 0 0 1-.5-.495l-.003-.2c-.043-1.221.477-2.001 1.645-2.712 1.03-.632 1.397-1.135 1.397-2.028 0-.979-.758-1.698-1.926-1.698-1.009 0-1.71.529-1.938 1.402-.066.254-.278.461-.54.461h-.777ZM7.496 14c.622 0 1.095-.474 1.095-1.09 0-.618-.473-1.092-1.095-1.092-.606 0-1.087.474-1.087 1.091S6.89 14 7.496 14Z"></path>
                             </svg></div>
                         <div>
-                            <h4>2. The question is the following, what is the answer?</h4>
-                            <div class="form-check"><input class="form-check-input" type="radio" id="formCheck-5"><label class="form-check-label" for="formCheck-5">Label</label></div>
-                            <div class="form-check"><input class="form-check-input" type="radio" id="formCheck-6"><label class="form-check-label" for="formCheck-6">Label</label></div>
-                            <div class="form-check"><input class="form-check-input" type="radio" id="formCheck-7"><label class="form-check-label" for="formCheck-7">Label</label></div>
-                            <div class="form-check"><input class="form-check-input" type="radio" id="formCheck-8"><label class="form-check-label" for="formCheck-8">Label</label></div>
+                            <h4 id="question_id_2"></h4>
+                            <div class="form-check"><input class="form-check-input" type="radio" id="formCheck-5" name="question2" value="answer_a"><label class="form-check-label" id="question-2-a" for="formCheck-5"></label></div>
+                            <div class="form-check"><input class="form-check-input" type="radio" id="formCheck-6" name="question2" value="answer_b"><label class="form-check-label" id="question-2-b" for="formCheck-6"></label></div>
+                            <div class="form-check"><input class="form-check-input" type="radio" id="formCheck-7" name="question2" value="answer_c"><label class="form-check-label" id="question-2-c" for="formCheck-7"></label></div>
+                            <div class="form-check"><input class="form-check-input" type="radio" id="formCheck-8" name="question2" value="answer_d"><label class="form-check-label" id="question-2-d" for="formCheck-8"></label></div>
                         </div>
                     </div>
                     <hr class="my-5">
@@ -77,11 +161,11 @@
                                 <path fill-rule="evenodd" d="M4.475 5.458c-.284 0-.514-.237-.47-.517C4.28 3.24 5.576 2 7.825 2c2.25 0 3.767 1.36 3.767 3.215 0 1.344-.665 2.288-1.79 2.973-1.1.659-1.414 1.118-1.414 2.01v.03a.5.5 0 0 1-.5.5h-.77a.5.5 0 0 1-.5-.495l-.003-.2c-.043-1.221.477-2.001 1.645-2.712 1.03-.632 1.397-1.135 1.397-2.028 0-.979-.758-1.698-1.926-1.698-1.009 0-1.71.529-1.938 1.402-.066.254-.278.461-.54.461h-.777ZM7.496 14c.622 0 1.095-.474 1.095-1.09 0-.618-.473-1.092-1.095-1.092-.606 0-1.087.474-1.087 1.091S6.89 14 7.496 14Z"></path>
                             </svg></div>
                         <div>
-                            <h4>3. Question?</h4>
-                            <div class="form-check"><input class="form-check-input" type="radio" id="formCheck-9"><label class="form-check-label" for="formCheck-9">Label</label></div>
-                            <div class="form-check"><input class="form-check-input" type="radio" id="formCheck-10"><label class="form-check-label" for="formCheck-10">Label</label></div>
-                            <div class="form-check"><input class="form-check-input" type="radio" id="formCheck-11"><label class="form-check-label" for="formCheck-11">Label</label></div>
-                            <div class="form-check"><input class="form-check-input" type="radio" id="formCheck-12"><label class="form-check-label" for="formCheck-12">Label</label></div>
+                            <h4 id="question_id_3"></h4>
+                            <div class="form-check"><input class="form-check-input" type="radio" id="formCheck-9" name="question3" value="answer_a"><label class="form-check-label" id="question-3-a" for="formCheck-9"></label></div>
+                            <div class="form-check"><input class="form-check-input" type="radio" id="formCheck-10" name="question3" value="answer_b"><label class="form-check-label" id="question-3-b" for="formCheck-10"></label></div>
+                            <div class="form-check"><input class="form-check-input" type="radio" id="formCheck-11" name="question3" value="answer_c"><label class="form-check-label" id="question-3-c" for="formCheck-11"></label></div>
+                            <div class="form-check"><input class="form-check-input" type="radio" id="formCheck-12" name="question3" value="answer_d"><label class="form-check-label" id="question-3-d" for="formCheck-12"></label></div>
                         </div>
                     </div>
                     <hr class="my-5">
@@ -90,11 +174,11 @@
                                 <path fill-rule="evenodd" d="M4.475 5.458c-.284 0-.514-.237-.47-.517C4.28 3.24 5.576 2 7.825 2c2.25 0 3.767 1.36 3.767 3.215 0 1.344-.665 2.288-1.79 2.973-1.1.659-1.414 1.118-1.414 2.01v.03a.5.5 0 0 1-.5.5h-.77a.5.5 0 0 1-.5-.495l-.003-.2c-.043-1.221.477-2.001 1.645-2.712 1.03-.632 1.397-1.135 1.397-2.028 0-.979-.758-1.698-1.926-1.698-1.009 0-1.71.529-1.938 1.402-.066.254-.278.461-.54.461h-.777ZM7.496 14c.622 0 1.095-.474 1.095-1.09 0-.618-.473-1.092-1.095-1.092-.606 0-1.087.474-1.087 1.091S6.89 14 7.496 14Z"></path>
                             </svg></div>
                         <div>
-                            <h4>4. The question is the following, what is the answer?<br><br></h4>
-                            <div class="form-check"><input class="form-check-input" type="radio" id="formCheck-13"><label class="form-check-label" for="formCheck-13">Label</label></div>
-                            <div class="form-check"><input class="form-check-input" type="radio" id="formCheck-14"><label class="form-check-label" for="formCheck-14">Label</label></div>
-                            <div class="form-check"><input class="form-check-input" type="radio" id="formCheck-15"><label class="form-check-label" for="formCheck-15">Label</label></div>
-                            <div class="form-check"><input class="form-check-input" type="radio" id="formCheck-16"><label class="form-check-label" for="formCheck-16">Label</label></div>
+                            <h4 id="question_id_4"><br><br></h4>
+                            <div class="form-check"><input class="form-check-input" type="radio" id="formCheck-13" name="question4" value="answer_a"><label class="form-check-label" id="question-4-a" for="formCheck-13"></label></div>
+                            <div class="form-check"><input class="form-check-input" type="radio" id="formCheck-14" name="question4" value="answer_b"><label class="form-check-label" id="question-4-b" for="formCheck-14"></label></div>
+                            <div class="form-check"><input class="form-check-input" type="radio" id="formCheck-15" name="question4" value="answer_c"><label class="form-check-label" id="question-4-c" for="formCheck-15"></label></div>
+                            <div class="form-check"><input class="form-check-input" type="radio" id="formCheck-16" name="question4" value="answer_d"><label class="form-check-label" id="question-4-d" for="formCheck-16"></label></div>
                         </div>
                         <hr class="my-5">
                     </div>
@@ -104,11 +188,11 @@
                                 <path fill-rule="evenodd" d="M4.475 5.458c-.284 0-.514-.237-.47-.517C4.28 3.24 5.576 2 7.825 2c2.25 0 3.767 1.36 3.767 3.215 0 1.344-.665 2.288-1.79 2.973-1.1.659-1.414 1.118-1.414 2.01v.03a.5.5 0 0 1-.5.5h-.77a.5.5 0 0 1-.5-.495l-.003-.2c-.043-1.221.477-2.001 1.645-2.712 1.03-.632 1.397-1.135 1.397-2.028 0-.979-.758-1.698-1.926-1.698-1.009 0-1.71.529-1.938 1.402-.066.254-.278.461-.54.461h-.777ZM7.496 14c.622 0 1.095-.474 1.095-1.09 0-.618-.473-1.092-1.095-1.092-.606 0-1.087.474-1.087 1.091S6.89 14 7.496 14Z"></path>
                             </svg></div>
                         <div>
-                            <h4>5. Question?</h4>
-                            <div class="form-check"><input class="form-check-input" type="radio" id="formCheck-17"><label class="form-check-label" for="formCheck-17">Label</label></div>
-                            <div class="form-check"><input class="form-check-input" type="radio" id="formCheck-18"><label class="form-check-label" for="formCheck-18">Label</label></div>
-                            <div class="form-check"><input class="form-check-input" type="radio" id="formCheck-19"><label class="form-check-label" for="formCheck-19">Label</label></div>
-                            <div class="form-check"><input class="form-check-input" type="radio" id="formCheck-20"><label class="form-check-label" for="formCheck-20">Label</label></div>
+                            <h4 id="question_id_5"></h4>
+                            <div class="form-check"><input class="form-check-input" type="radio" id="formCheck-17" name="question5" value="answer_a"><label class="form-check-label" id="question-5-a" for="formCheck-17"></label></div>
+                            <div class="form-check"><input class="form-check-input" type="radio" id="formCheck-18" name="question5" value="answer_b"><label class="form-check-label" id="question-5-b" for="formCheck-18"></label></div>
+                            <div class="form-check"><input class="form-check-input" type="radio" id="formCheck-19" name="question5" value="answer_c"><label class="form-check-label" id="question-5-c" for="formCheck-19"></label></div>
+                            <div class="form-check"><input class="form-check-input" type="radio" id="formCheck-20" name="question5" value="answer_d"><label class="form-check-label" id="question-5-d" for="formCheck-20"></label></div>
                         </div>
                     </div>
                     <hr class="my-5">
@@ -117,11 +201,11 @@
                                 <path fill-rule="evenodd" d="M4.475 5.458c-.284 0-.514-.237-.47-.517C4.28 3.24 5.576 2 7.825 2c2.25 0 3.767 1.36 3.767 3.215 0 1.344-.665 2.288-1.79 2.973-1.1.659-1.414 1.118-1.414 2.01v.03a.5.5 0 0 1-.5.5h-.77a.5.5 0 0 1-.5-.495l-.003-.2c-.043-1.221.477-2.001 1.645-2.712 1.03-.632 1.397-1.135 1.397-2.028 0-.979-.758-1.698-1.926-1.698-1.009 0-1.71.529-1.938 1.402-.066.254-.278.461-.54.461h-.777ZM7.496 14c.622 0 1.095-.474 1.095-1.09 0-.618-.473-1.092-1.095-1.092-.606 0-1.087.474-1.087 1.091S6.89 14 7.496 14Z"></path>
                             </svg></div>
                         <div>
-                            <h4>6. The question is the following, what is the answer?<br><br></h4>
-                            <div class="form-check"><input class="form-check-input" type="radio" id="formCheck-21"><label class="form-check-label" for="formCheck-21">Label</label></div>
-                            <div class="form-check"><input class="form-check-input" type="radio" id="formCheck-22"><label class="form-check-label" for="formCheck-22">Label</label></div>
-                            <div class="form-check"><input class="form-check-input" type="radio" id="formCheck-23"><label class="form-check-label" for="formCheck-23">Label</label></div>
-                            <div class="form-check"><input class="form-check-input" type="radio" id="formCheck-24"><label class="form-check-label" for="formCheck-24">Label</label></div>
+                            <h4 id="question_id_6"><br><br></h4>
+                            <div class="form-check"><input class="form-check-input" type="radio" id="formCheck-21" name="question6" value="answer_a"><label class="form-check-label" id="question-6-a" for="formCheck-21"></label></div>
+                            <div class="form-check"><input class="form-check-input" type="radio" id="formCheck-22" name="question6" value="answer_b"><label class="form-check-label" id="question-6-b" for="formCheck-22"></label></div>
+                            <div class="form-check"><input class="form-check-input" type="radio" id="formCheck-23" name="question6" value="answer_c"><label class="form-check-label" id="question-6-c" for="formCheck-23"></label></div>
+                            <div class="form-check"><input class="form-check-input" type="radio" id="formCheck-24" name="question6" value="answer_d"><label class="form-check-label" id="question-6-d" for="formCheck-24"></label></div>
                         </div>
                         <hr class="my-5">
                     </div>
@@ -131,11 +215,11 @@
                                 <path fill-rule="evenodd" d="M4.475 5.458c-.284 0-.514-.237-.47-.517C4.28 3.24 5.576 2 7.825 2c2.25 0 3.767 1.36 3.767 3.215 0 1.344-.665 2.288-1.79 2.973-1.1.659-1.414 1.118-1.414 2.01v.03a.5.5 0 0 1-.5.5h-.77a.5.5 0 0 1-.5-.495l-.003-.2c-.043-1.221.477-2.001 1.645-2.712 1.03-.632 1.397-1.135 1.397-2.028 0-.979-.758-1.698-1.926-1.698-1.009 0-1.71.529-1.938 1.402-.066.254-.278.461-.54.461h-.777ZM7.496 14c.622 0 1.095-.474 1.095-1.09 0-.618-.473-1.092-1.095-1.092-.606 0-1.087.474-1.087 1.091S6.89 14 7.496 14Z"></path>
                             </svg></div>
                         <div>
-                            <h4>7. Question?</h4>
-                            <div class="form-check"><input class="form-check-input" type="radio" id="formCheck-17"><label class="form-check-label" for="formCheck-17">Label</label></div>
-                            <div class="form-check"><input class="form-check-input" type="radio" id="formCheck-18"><label class="form-check-label" for="formCheck-18">Label</label></div>
-                            <div class="form-check"><input class="form-check-input" type="radio" id="formCheck-19"><label class="form-check-label" for="formCheck-19">Label</label></div>
-                            <div class="form-check"><input class="form-check-input" type="radio" id="formCheck-20"><label class="form-check-label" for="formCheck-20">Label</label></div>
+                            <h4 id="question_id_7"></h4>
+                            <div class="form-check"><input class="form-check-input" type="radio" id="formCheck-17" name="question7" value="answer_a"><label class="form-check-label" id="question-7-a" for="formCheck-17"></label></div>
+                            <div class="form-check"><input class="form-check-input" type="radio" id="formCheck-18" name="question7" value="answer_b"><label class="form-check-label" id="question-7-b" for="formCheck-18"></label></div>
+                            <div class="form-check"><input class="form-check-input" type="radio" id="formCheck-19" name="question7" value="answer_c"><label class="form-check-label" id="question-7-c" for="formCheck-19"></label></div>
+                            <div class="form-check"><input class="form-check-input" type="radio" id="formCheck-20" name="question7" value="answer_d"><label class="form-check-label" id="question-7-d" for="formCheck-20"></label></div>
                         </div>
                     </div>
                     <hr class="my-5">
@@ -144,11 +228,11 @@
                                 <path fill-rule="evenodd" d="M4.475 5.458c-.284 0-.514-.237-.47-.517C4.28 3.24 5.576 2 7.825 2c2.25 0 3.767 1.36 3.767 3.215 0 1.344-.665 2.288-1.79 2.973-1.1.659-1.414 1.118-1.414 2.01v.03a.5.5 0 0 1-.5.5h-.77a.5.5 0 0 1-.5-.495l-.003-.2c-.043-1.221.477-2.001 1.645-2.712 1.03-.632 1.397-1.135 1.397-2.028 0-.979-.758-1.698-1.926-1.698-1.009 0-1.71.529-1.938 1.402-.066.254-.278.461-.54.461h-.777ZM7.496 14c.622 0 1.095-.474 1.095-1.09 0-.618-.473-1.092-1.095-1.092-.606 0-1.087.474-1.087 1.091S6.89 14 7.496 14Z"></path>
                             </svg></div>
                         <div>
-                            <h4>8. The question is the following, what is the answer?<br><br></h4>
-                            <div class="form-check"><input class="form-check-input" type="radio" id="formCheck-25"><label class="form-check-label" for="formCheck-25">Label</label></div>
-                            <div class="form-check"><input class="form-check-input" type="radio" id="formCheck-26"><label class="form-check-label" for="formCheck-26">Label</label></div>
-                            <div class="form-check"><input class="form-check-input" type="radio" id="formCheck-27"><label class="form-check-label" for="formCheck-27">Label</label></div>
-                            <div class="form-check"><input class="form-check-input" type="radio" id="formCheck-28"><label class="form-check-label" for="formCheck-28">Label</label></div>
+                            <h4 id="question_id_8"><br><br></h4>
+                            <div class="form-check"><input class="form-check-input" type="radio" id="formCheck-25" name="question8" value="answer_a"><label class="form-check-label" id="question-8-a" for="formCheck-25"></label></div>
+                            <div class="form-check"><input class="form-check-input" type="radio" id="formCheck-26" name="question8" value="answer_b"><label class="form-check-label" id="question-8-b" for="formCheck-26"></label></div>
+                            <div class="form-check"><input class="form-check-input" type="radio" id="formCheck-27" name="question8" value="answer_c"><label class="form-check-label" id="question-8-c" for="formCheck-27"></label></div>
+                            <div class="form-check"><input class="form-check-input" type="radio" id="formCheck-28" name="question8" value="answer_d"><label class="form-check-label" id="question-8-d" for="formCheck-28"></label></div>
                         </div>
                     </div>
                     <hr class="my-5">
@@ -157,11 +241,11 @@
                                 <path fill-rule="evenodd" d="M4.475 5.458c-.284 0-.514-.237-.47-.517C4.28 3.24 5.576 2 7.825 2c2.25 0 3.767 1.36 3.767 3.215 0 1.344-.665 2.288-1.79 2.973-1.1.659-1.414 1.118-1.414 2.01v.03a.5.5 0 0 1-.5.5h-.77a.5.5 0 0 1-.5-.495l-.003-.2c-.043-1.221.477-2.001 1.645-2.712 1.03-.632 1.397-1.135 1.397-2.028 0-.979-.758-1.698-1.926-1.698-1.009 0-1.71.529-1.938 1.402-.066.254-.278.461-.54.461h-.777ZM7.496 14c.622 0 1.095-.474 1.095-1.09 0-.618-.473-1.092-1.095-1.092-.606 0-1.087.474-1.087 1.091S6.89 14 7.496 14Z"></path>
                             </svg></div>
                         <div>
-                            <h4>9. Question?</h4>
-                            <div class="form-check"><input class="form-check-input" type="radio" id="formCheck-29"><label class="form-check-label" for="formCheck-29">Label</label></div>
-                            <div class="form-check"><input class="form-check-input" type="radio" id="formCheck-30"><label class="form-check-label" for="formCheck-30">Label</label></div>
-                            <div class="form-check"><input class="form-check-input" type="radio" id="formCheck-31"><label class="form-check-label" for="formCheck-31">Label</label></div>
-                            <div class="form-check"><input class="form-check-input" type="radio" id="formCheck-32"><label class="form-check-label" for="formCheck-32">Label</label></div>
+                            <h4 id="question_id_9"></h4>
+                            <div class="form-check"><input class="form-check-input" type="radio" id="formCheck-29" name="question9" value="answer_a"><label class="form-check-label" id="question-9-a" for="formCheck-29"></label></div>
+                            <div class="form-check"><input class="form-check-input" type="radio" id="formCheck-30" name="question9" value="answer_b"><label class="form-check-label" id="question-9-b" for="formCheck-30"></label></div>
+                            <div class="form-check"><input class="form-check-input" type="radio" id="formCheck-31" name="question9" value="answer_c"><label class="form-check-label" id="question-9-c" for="formCheck-31"></label></div>
+                            <div class="form-check"><input class="form-check-input" type="radio" id="formCheck-32" name="question9" value="answer_d"><label class="form-check-label" id="question-9-d" for="formCheck-32"></label></div>
                         </div>
                     </div>
                     <hr class="my-5">
@@ -170,16 +254,17 @@
                                 <path fill-rule="evenodd" d="M4.475 5.458c-.284 0-.514-.237-.47-.517C4.28 3.24 5.576 2 7.825 2c2.25 0 3.767 1.36 3.767 3.215 0 1.344-.665 2.288-1.79 2.973-1.1.659-1.414 1.118-1.414 2.01v.03a.5.5 0 0 1-.5.5h-.77a.5.5 0 0 1-.5-.495l-.003-.2c-.043-1.221.477-2.001 1.645-2.712 1.03-.632 1.397-1.135 1.397-2.028 0-.979-.758-1.698-1.926-1.698-1.009 0-1.71.529-1.938 1.402-.066.254-.278.461-.54.461h-.777ZM7.496 14c.622 0 1.095-.474 1.095-1.09 0-.618-.473-1.092-1.095-1.092-.606 0-1.087.474-1.087 1.091S6.89 14 7.496 14Z"></path>
                             </svg></div>
                         <div>
-                            <h4>10. The question is the following, what is the answer?<br><br></h4>
-                            <div class="form-check"><input class="form-check-input" type="radio" id="formCheck-33"><label class="form-check-label" for="formCheck-33">Label</label></div>
-                            <div class="form-check"><input class="form-check-input" type="radio" id="formCheck-34"><label class="form-check-label" for="formCheck-34">Label</label></div>
-                            <div class="form-check"><input class="form-check-input" type="radio" id="formCheck-35"><label class="form-check-label" for="formCheck-35">Label</label></div>
-                            <div class="form-check"><input class="form-check-input" type="radio" id="formCheck-36"><label class="form-check-label" for="formCheck-36">Label</label></div>
+                            <h4 id="question_id_10"><br><br></h4>
+                            <div class="form-check"><input class="form-check-input" type="radio" id="formCheck-33" name="question10" value="answer_a"><label class="form-check-label" id="question-10-a" for="formCheck-33"></label></div>
+                            <div class="form-check"><input class="form-check-input" type="radio" id="formCheck-34" name="question10" value="answer_b"><label class="form-check-label" id="question-10-b" for="formCheck-34"></label></div>
+                            <div class="form-check"><input class="form-check-input" type="radio" id="formCheck-35" name="question10" value="answer_c"><label class="form-check-label" id="question-10-c" for="formCheck-35"></label></div>
+                            <div class="form-check"><input class="form-check-input" type="radio" id="formCheck-36" name="question10" value="answer_d"><label class="form-check-label" id="question-10-d" for="formCheck-36"></label></div>
                         </div>
                         <hr class="my-5">
                     </div>
-                    <div style="text-align: center;padding: 15px;"><button class="btn btn-primary" type="button" style="padding: 10.6px 33px;">Submit</button></div>
+                    <div style="text-align: center;padding: 15px;"><button class="btn btn-primary" id="submit" type="submit" style="padding: 10.6px 33px;">Submit</button></div>
                 </form>
+                <div style="text-align: center;padding: 15px;"></div><p class="fw-bold text-success mb-2" id="form-response2" style="color: #114255;"></p></div>
             </div>
         </div>
     </div>
