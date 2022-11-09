@@ -79,7 +79,7 @@
                     success: function(res){
                         console.log(res)
                         console.log(res.answersCorrect)
-                        var dataDict = res.answersCorrect;
+                        var dataDict = { question1Ans: res.answersCorrect.question1Answer };
                         console.log("Your data dictionary is: " + dataDict)
                         var dataArray2 = res
                         $('#form-response').text('You Scored ' + dataArray2.score + '%');
