@@ -80,7 +80,7 @@
                     success: function(res){
                         console.log(res)
                         console.log(res.answersCorrect)
-                        var data = res.answersCorrect
+                        var data = res.answersCorrect.question1Answer
                         console.log("Your question data is: " + data.answersCorrect)
                         var dataArray2 = res
                         $('#form-response').text('You Scored ' + dataArray2.score + '%');
