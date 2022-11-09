@@ -42,7 +42,7 @@
                         console.log(i);
                     },
                     error: function(){
-                        $('#form-response').text('Error.');
+                        
                     }
                 });
 
@@ -99,13 +99,17 @@
                             
                             // console.log(res.answersCorrect[selector]);
                         }
-                        
-                        $('#form-response').text('You Scored ' + res.score + '%');
-                        $('#form-response2').text('You Scored ' + res.score + '%');
-                        $('#api2-response').text('Response from API 2');
+
+                        if (res.score >= 70){
+                            $('#quiz-pass-top').text('PASS! You Scored ' + res.score + '%');
+                            $('#quiz-pass-bottom').text('PASS! You Scored ' + res.score + '%');
+                        } else {
+                            $('#quiz-fail-top').text('FAIL. You Scored ' + res.score + '%');
+                            $('#quiz-fail-bottom').text('FAIL. You Scored ' + res.score + '%');
+                        }
                     },
                     error: function(){
-                        $('#api2-response').text('Error.');
+                        
                     }
                 });
 
@@ -131,11 +135,11 @@
             </div>
         </div>
     </nav>
-    <h1 id="api2-response"></h1>
     <div class="container py-4 py-xl-5">
         <div class="col-md-8 col-xl-6 text-center text-md-start mx-auto">
             <div class="text-center">
-                <p class="fw-bold text-success mb-2" id="form-response" style="color: #114255;"></p>
+                <p class="fw-bold text-success mb-2" id="quiz-pass-top" style="color: #114255;"></p>
+                <p class="fw-bold text-danger mb-2" id="quiz-fail-top" style="color: #114255;"></p>
                 <h1 class="fw-bold" style="color: #114255;">Test your knowledge</h1>
             </div>
         </div>
@@ -305,7 +309,8 @@
                     </div>
                     <div style="text-align: center;padding: 15px;"><button class="btn btn-primary" id="submit" type="submit" style="padding: 10.6px 33px;">Submit</button></div>
                 </form>
-                <div style="text-align: center;padding: 15px;"></div><p class="fw-bold text-success mb-2" id="form-response2" style="color: #114255;"></p></div>
+                <div style="text-align: center;padding: 10px;"></div><p class="fw-bold text-success mb-2" id="quiz-pass-bottom"></p></div>
+                <div style="text-align: center;padding: 10px;"></div><p class="fw-bold text-danger mb-2" id="quiz-fail-bottom"></p></div>
             </div>
         </div>
     </div>
