@@ -83,15 +83,16 @@
 
                         var dataArray2 = {};
 
-                        var i = 0
-                        var j = 1
-                        for (var i = 0; i < res.answersCorrect.length; i++) {
-                            var selector = ("question" + j + "Answer")
-                            dataArray2([selector]) = res(answersCorrect[selector])
-                            j = j + 1;
-                        }
-                        // dataArray2.question1Answer = res.answersCorrect.question1Answer;
-                        // dataArray2.question2Answer = res.answersCorrect.question2Answer;
+                        dataArray2.question1Answer = res.answersCorrect.question1Answer;
+                        dataArray2.question2Answer = res.answersCorrect.question2Answer;
+                        dataArray2.question3Answer = res.answersCorrect.question3Answer;
+                        dataArray2.question4Answer = res.answersCorrect.question4Answer;
+                        dataArray2.question5Answer = res.answersCorrect.question5Answer;
+                        dataArray2.question6Answer = res.answersCorrect.question6Answer;
+                        dataArray2.question7Answer = res.answersCorrect.question7Answer;
+                        dataArray2.question8Answer = res.answersCorrect.question8Answer;
+                        dataArray2.question9Answer = res.answersCorrect.question9Answer;
+                        dataArray2.question10Answer = res.answersCorrect.question10Answer;
 
                         console.log(dataArray2);
                         
