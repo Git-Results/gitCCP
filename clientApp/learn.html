@@ -85,18 +85,16 @@
                         var correctSelector = "";
                         var correct = false;
 
-                        console.log(res.answersCorrect[selector]);
-
                         for (var i = 1; i < 11; i++){
                             selector = ("question" + i + "Answer");
-                            correctSelector = (selector + "-correct")
-                            failureSelector = (selector + "-failure")
+                            correctSelector = ("#" + selector + "-correct")
+                            failureSelector = ("#" + selector + "-failure")
                             correct = (res.answersCorrect[selector])
 
-                            if (correct === true){
+                            if (correct == true){
                                 $(correctSelector).text('Great job!');
                             } else {
-                                $(failureSelector).text('Keep studying!')
+                                $(failureSelector).text('Keep studying!');
                             }
                             
                             // console.log(res.answersCorrect[selector]);
