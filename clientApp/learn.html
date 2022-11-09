@@ -82,8 +82,16 @@
                         console.log(res.answersCorrect)
 
                         var dataArray2 = {};
-                        dataArray2.question1Answer = res.answersCorrect.question1Answer;
-                        dataArray2.question2Answer = res.answersCorrect.question2Answer;
+
+                        var i = 0
+                        var j = 1
+                        for (var i = 0; i < res.answersCorrect.length; i++) {
+                            var selector = ("question" + j + "Answer")
+                            dataArray2([selector]) = res(answersCorrect[selector])
+                            j = j + 1;
+                        }
+                        // dataArray2.question1Answer = res.answersCorrect.question1Answer;
+                        // dataArray2.question2Answer = res.answersCorrect.question2Answer;
 
                         console.log(dataArray2);
                         
