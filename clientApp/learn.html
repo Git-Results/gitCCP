@@ -78,6 +78,7 @@
                     }),
                     success: function(res){
                         console.log(res)
+                        console.log(res.answersCorrect)
                         var dataArray2 = res
                         $('#form-response').text('You Scored ' + dataArray2.score + '%');
                         $('#form-response2').text('You Scored ' + dataArray2.score + '%');
