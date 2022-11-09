@@ -94,7 +94,13 @@
                         dataArray2.question9Answer = res.answersCorrect.question9Answer;
                         dataArray2.question10Answer = res.answersCorrect.question10Answer;
 
-                        console.log(dataArray2);
+                        dataArray2.forEach(dataSet2 => {
+                        //create variables for data
+                        var questionNum = i;
+                        var answerNum = ("question" + questionNum + "answer")
+                        var correctKey = ("#correct-" + questionNum)
+
+                        console.log("The data I'm searching: " + dataSet2.answerNum)
                         
                         $('#form-response').text('You Scored ' + dataArray2.score + '%');
                         $('#form-response2').text('You Scored ' + dataArray2.score + '%');
