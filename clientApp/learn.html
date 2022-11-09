@@ -94,8 +94,13 @@
                         dataArray2.question9Answer = res.answersCorrect.question9Answer;
                         dataArray2.question10Answer = res.answersCorrect.question10Answer;
 
-                        var selector = ("question1Answer")
+                        var selector = "";
                         console.log(res.answersCorrect[selector]);
+
+                        for (var i = 1; i < 11; i++){
+                            selector = ("question" + i + "Answer");
+                            console.log(res.answersCorrect[selector]);
+                        }
                         
                         $('#form-response').text('You Scored ' + dataArray2.score + '%');
                         $('#form-response2').text('You Scored ' + dataArray2.score + '%');
