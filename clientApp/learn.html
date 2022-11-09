@@ -80,10 +80,13 @@
                     success: function(res){
                         console.log(res)
                         console.log(res.answersCorrect)
-                        var data = res
-                        var answersCorrect = data.answersCorrect
-                        console.log("Your question data is: " + answersCorrect )
-                        var dataArray2 = res
+
+                        var dataArray2 = {};
+                        dataArray2.question1Answer = res.answersCorrect.question1Answer;
+                        dataArray2.question2Answer = res.answersCorrect.question2Answer;
+
+                        console.log(dataArray2);
+                        
                         $('#form-response').text('You Scored ' + dataArray2.score + '%');
                         $('#form-response2').text('You Scored ' + dataArray2.score + '%');
                         $('#api2-response').text('Response from API 2');
